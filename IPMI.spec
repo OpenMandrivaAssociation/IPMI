@@ -1,6 +1,6 @@
 %define	name	IPMI
 %define	version	1.0 
-%define	release	%mkrel 5
+%define	release	%mkrel 6
 
 Summary:	A simple initscript to load IPMI drivers
 Name:		%{name}
@@ -18,7 +18,7 @@ A simple initscript to load IPMI drivers
 IPMI stands for Intelligent Platform Management Interface
 and is an open standard for machine health, and control
 (including remote control), and is implemented by many
-hardware vendors - Intel is one of the originators,
+hardware vendors - Intel is one of the originators
 and early adopters of the standard.
 
 %prep
