@@ -9,7 +9,6 @@ Release:	%{release}
 Source0:	ipmi
 License:	GPL
 Group:		System/Kernel and hardware 
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Prereq:		rpm-helper
 buildarch:	noarch
 
