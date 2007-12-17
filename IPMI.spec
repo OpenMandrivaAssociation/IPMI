@@ -9,7 +9,7 @@ Release:	%{release}
 Source0:	ipmi
 License:	GPL
 Group:		System/Kernel and hardware 
-Prereq:		rpm-helper
+Requires(post,preun):	rpm-helper
 buildarch:	noarch
 
 %description
