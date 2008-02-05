@@ -1,6 +1,6 @@
 %define	name	IPMI
 %define	version	1.0 
-%define	release	%mkrel 7
+%define	release	%mkrel 8
 
 Summary:	A simple initscript to load IPMI drivers
 Name:		%{name}
@@ -9,7 +9,7 @@ Release:	%{release}
 Source0:	ipmi
 License:	GPL
 Group:		System/Kernel and hardware 
-Requires(post,preun):	rpm-helper
+Requires(post,preun):	rpm-helper, openimi-lanserv
 buildarch:	noarch
 
 %description
