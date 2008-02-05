@@ -9,7 +9,7 @@ Release:	%{release}
 Source0:	ipmi
 License:	GPL
 Group:		System/Kernel and hardware 
-Requires(post,preun):	rpm-helper, openimi-lanserv
+Requires(post,preun):	rpm-helper, openipmi-lanserv
 buildarch:	noarch
 
 %description
