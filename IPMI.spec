@@ -9,6 +9,7 @@ Release:	%{release}
 Source0:	ipmi
 License:	GPL
 Group:		System/Kernel and hardware 
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires(post,preun):	rpm-helper, openipmi-lanserv
 buildarch:	noarch
 
