@@ -1,6 +1,6 @@
 %define	name	IPMI
 %define	version	1.0 
-%define	release	%mkrel 10
+%define	release	%mkrel 11
 
 Summary:	A simple initscript to load IPMI drivers
 Name:		%{name}
