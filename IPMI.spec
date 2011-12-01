@@ -26,11 +26,11 @@ and early adopters of the standard.
 %build
 
 %install
-rm -rf $RPM_BUILD_ROOT
-install -m744 %{SOURCE0} -D $RPM_BUILD_ROOT%{_initrddir}/ipmi
+rm -rf %{buildroot}
+install -m744 %{SOURCE0} -D %{buildroot}%{_initrddir}/ipmi
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %post
 %_post_service ipmi
