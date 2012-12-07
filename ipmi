@@ -1,0 +1,123 @@
+#!/bin/bash
+#
+### BEGIN INIT INFO
+# Provides: ipmi
+# Default-Start: 2 3 4 5
+# Short-Description: Load IPMI drivers
+# Description: A simple initscript to load IPMI drivers
+### END INIT INFO
+
+# source function library
+. /etc/rc.d/init.d/functions
+
+TIMEOUT=40
+KERNEL_TYPE=`uname -r | perl -p -e 's|(2\.[2-6]).*|$1|g'`
+MAIN_DRIVER=none
+
+find_driver()
+{
+if [ "$KERNEL_TYPE" = "2.6" ] ; then
+	cd /lib/modules/`uname -r`/kernel/drivers/char/ipmi/
+	MAIN_DRIVER=`ls *_si* | cut -d "." -f 1`
+else if [ "$KERNEL_TYPE" = "2.4" ] ; then
+	MAIN_DRIVER=ipmi_kcs_drv
+else
+	failure "Starting IPMI (unsupported kernel)"
+	echo
+	exit
+fi
+fi
+}
+
+start()
+{
+	gprintf "Probing IPMI ($MAIN_DRIVER)"
+	modprobe $MAIN_DRIVER 2>/dev/null
+	
+	if [ $? -ne 0 ] ; then
+		failure "Starting IPMI" 
+		echo
+		exit
+	fi
+	modprobe ipmi_devintf 
+	modprobe ipmi_watchdog timeout=$TIMEOUT
+	success "Probing IPMI ($MAIN_DRIVER)" 
+	echo
+
+	if [ -x /usr/bin/ipmilan ]; then
+		gprintf "Starting IPMI Lan daemon"
+	        daemon ipmilan 
+		touch /var/lock/subsys/ipmi
+		success "Starting IPMI Lan daemon"
+		echo
+	fi
+
+}
+
+stop()
+{
+	if [ -x /usr/bin/ipmilan ]; then
+		gprintf "Stopping IPMI Lan daemon"
+		killproc ipmilan
+        	rm -f /var/lock/subsys/ipmi
+		success "Stopping IPMI Lan daemon"
+		echo	
+	fi
+	
+	gprintf "Stopping IPMI"
+	rmmod ipmi_watchdog 2>/dev/null
+      	rmmod ipmi_devintf 2>/dev/null
+        rmmod $MAIN_DRIVER 2>/dev/null
+	rmmod ipmi_msghandler 2>/dev/null
+	success "Stopping IPMI"
+	echo
+	
+}
+
+
+status()
+{
+	if [ `lsmod | grep $MAIN_DRIVER | wc -l` -eq 0 ]; then
+		gprintf "IPMI driver ($MAIN_DRIVER) is not loaded";
+		echo
+	else
+		gprintf "IPMI driver ($MAIN_DRIVER) is loaded";
+		echo
+	fi
+
+	if [ `pidof ipmilan` ]; then
+		gprintf "IPMI Lan daemon is running"
+		echo
+	else
+		if [ -x /usr/bin/ipmilan ]; then
+			gprintf "IPMI Lan daemon is not running"
+			echo
+		fi
+	fi
+}
+
+find_driver
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		stop
+		start
+		;;
+	reload)
+		stop
+		start
+		;;
+	
+	status)
+		status
+		;;
+	*)
+		gprintf "Usage: %s {start|stop|restart|reload|status}\n" "$0"
+		RETVAL=1
+esac

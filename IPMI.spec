@@ -26,11 +26,11 @@ and early adopters of the standard.
 %build
 
 %install
-rm -rf %{buildroot}
-install -m744 %{SOURCE0} -D %{buildroot}%{_initrddir}/ipmi
+rm -rf $RPM_BUILD_ROOT
+install -m744 %{SOURCE0} -D $RPM_BUILD_ROOT%{_initrddir}/ipmi
 
 %clean
-rm -rf %{buildroot}
+rm -rf $RPM_BUILD_ROOT
 
 %post
 %_post_service ipmi
@@ -41,3 +41,58 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root)
 %config(noreplace) %{_initrddir}/ipmi
+
+
+%changelog
+* Fri Apr 15 2011 Antoine Ginies <aginies@mandriva.com> 1.0-12mdv2011.0
++ Revision: 653142
+- bump the release
+
+* Tue Mar 16 2010 Oden Eriksson <oeriksson@mandriva.com> 1.0-11mdv2010.1
++ Revision: 521841
+- rebuilt for 2010.1
+
+* Tue Sep 01 2009 Christophe Fergeau <cfergeau@mandriva.com> 1.0-10mdv2010.0
++ Revision: 423657
+- rebuild
+
+* Tue Jun 17 2008 Thierry Vignaud <tv@mandriva.org> 1.0-9mdv2009.0
++ Revision: 221634
+- rebuild
+- fix no-buildroot-tag
+
+* Tue Feb 05 2008 Erwan Velu <erwan@mandriva.org> 1.0-8mdv2008.1
++ Revision: 162680
+- Fixing typo
+- Fixing requires
+
+* Sun Jan 13 2008 Thierry Vignaud <tv@mandriva.org> 1.0-7mdv2008.1
++ Revision: 150292
+- rebuild
+- fix prereq on rpm-helper
+- kill re-definition of %%buildroot on Pixel's request
+
+* Wed May 02 2007 Adam Williamson <awilliamson@mandriva.org> 1.0-6mdv2008.0
++ Revision: 20291
+- support pinit; rebuild for new era
+- Import IPMI
+
+
+
+* Mon Mar 20 2006 Erwan Velu <erwan@seanodes.com> 1.0-5mdk
+- mkrel
+- rebuild
+
+* Tue Aug 24 2004 Per Øyvind Karlsen <peroyvind@linux-mandrake.com> 1.0-4mdk
+- fix typo in init script
+- cosmetics
+
+* Wed Aug 18 2004 Erwan Velu <erwan@mandrakesoft.com> 1.0-3mdk
+- Supporting 2.4 kernels
+- Supporting v32 & V30 under 2.6 kernels
+
+* Fri Aug 13 2004 Erwan Velu <erwan@mandrakesoft.com> 1.0-2mdk
+- Fixing description
+
+* Wed Aug 11 2004 Erwan Velu <erwan@mandrakesoft.com> 1.0-1mdk
+- Initial relase
