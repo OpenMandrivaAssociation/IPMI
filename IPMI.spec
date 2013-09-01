@@ -22,7 +22,7 @@ and early adopters of the standard.
 %build
 
 %install
-install -m744 %{SOURCE0} -D $RPM_BUILD_ROOT%{_initrddir}/ipmi
+install -m744 %{SOURCE0} -D %{buildroot}%{_initrddir}/ipmi
 
 %post
 %_post_service ipmi
