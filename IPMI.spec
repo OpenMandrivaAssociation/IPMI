@@ -1,7 +1,7 @@
 Summary:	A simple initscript to load IPMI drivers
 Name:		IPMI
 Version:	1.0
-Release:	12
+Release:	13
 License:	GPLv2
 Group:		System/Kernel and hardware 
 Source0:	ipmi
